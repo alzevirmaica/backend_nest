@@ -1,14 +1,16 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { TasksService } from './tasks.service';
 
 @Controller('tasks')
 export class TasksController {
+  constructor(private readonly taskService: TasksService) {}
   @Get()
-  getTasks() {
-    return 'Aqui lista todas tarefas';
+  findAllTasks() {
+    return this.taskService.findAll();
   }
 
-  @Get('/teste')
-  getstest() {
-    return 'teste tarefas';
+  @Get(':id')
+  findOneTask(@Param('id') id: string) {
+    return this.taskService.findOne(id);
   }
 }
